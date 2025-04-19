@@ -28,7 +28,7 @@ let
   intraOutputFold = builtins.map intraOutputFoldFunction mapping4;
   tracePoint = let
 	pkgs = import <nixpkgs> {};
-  in pkgs.lib.debug.traceSeq intraOutputFold intraOutputFold
+  in pkgs.lib.debug.traceSeq intraOutputFold intraOutputFold;
   flattening = (import ./flattenList.nix) tracePoint;
 
   #crossOutputFoldFunction = intraOutputFoldFunction;
