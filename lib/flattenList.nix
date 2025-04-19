@@ -1,3 +1,3 @@
 listOfLists:
-  builtins.foldl' (acc: sublist: acc ++ sublist) [] listOfLists;
+  builtins.foldl' (acc: sublist: acc ++ sublist) [] listOfLists
 
