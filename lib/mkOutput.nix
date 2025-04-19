@@ -26,10 +26,13 @@ let
   mapping4 = builtins.map funcForFourthMapping mapping3;
   intraOutputFoldFunction = listOfAttrs: builtins.foldl' (import ./deepMerge.nix) {} listOfAttrs;
   intraOutputFold = builtins.map intraOutputFoldFunction mapping4;
-  breaking = builtins.break;
-  flattening = (import ./flattenList.nix) intraOutputFold;
+  tracePoint = let
+	pkgs = import <nixpkgs> {};
+  in pkgs.lib.debug.traceSeq intraOutputFold intraOutputFold
+  flattening = (import ./flattenList.nix) tracePoint;
+
   #crossOutputFoldFunction = intraOutputFoldFunction;
 in
 #crossOutputFoldFunction flattening
-builtins.break flattening
+flattening
   
