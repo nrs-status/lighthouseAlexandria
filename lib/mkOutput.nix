@@ -27,7 +27,7 @@ let
   intraOutputFoldFunction = listOfAttrs: builtins.foldl' (import ./deepMerge.nix) {} listOfAttrs;
   intraOutputFold = builtins.map intraOutputFoldFunction mapping4;
   breaking = builtins.break;
-  flattening = (import ./flattenList.nix) intraOuputFold;
+  flattening = (import ./flattenList.nix) intraOutputFold;
   #crossOutputFoldFunction = intraOutputFoldFunction;
 in
 #crossOutputFoldFunction flattening
