@@ -4,11 +4,11 @@ let
 in
 rec {
   inherit outputElm;
-  mkMyPkgs = { mypkgsdir }: (import ./lib/mkMyPkgs.nix { pkgslib = pkgs.lib; }) {
+  mkMyPkgs = { mypkgsdir }: (import ./mkMyPkgs.nix { pkgslib = pkgs.lib; }) {
     inherit mypkgsdir;
     flakeInputs = outputElm.inputs;
   };
-  mkEnvsAttrs = { mypkgsdir, envsdir }: (import ./lib/mkEnvsAttrs.nix { pkgslib = pkgs.lib; }) {
+  mkEnvsAttrs = { mypkgsdir, envsdir }: (import ./mkEnvsAttrs.nix { pkgslib = pkgs.lib; }) {
     inherit envsdir;
     nixpkgsFlakeInputAsPkgs = pkgs;
     myPkgs = mkMyPkgs mypkgsdir;
