@@ -14,6 +14,6 @@ let deepMerge = lhs: rhs:
             lhs.${name} ++ value
           else
             value)
-        rhs)
+        rhs);
 in
 deepMerge lhs rhs
