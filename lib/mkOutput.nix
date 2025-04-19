@@ -30,5 +30,5 @@ let
   #crossOutputFoldFunction = intraOutputFoldFunction;
 in
 #crossOutputFoldFunction flattening
-intraOuputFold
+builtins.trace intraOutputFold intraOutputFold
   
