@@ -1,4 +1,5 @@
 lhs: rhs:
+let deepMerge = lhs: rhs:
       lhs // rhs // (builtins.mapAttrs
         (name: value:
           if (builtins.hasAttr name lhs &&
@@ -14,4 +15,5 @@ lhs: rhs:
           else
             value)
         rhs)
-
+in
+deepMerge lhs rhs
