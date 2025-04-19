@@ -25,9 +25,10 @@ let
   funcForFourthMapping = triple: builtins.map (nestedFuncForFourthMapping triple) triple.supportedSystems;
   mapping4 = builtins.map funcForFourthMapping mapping3;
   intraOutputFoldFunction = listOfAttrs: builtins.foldl' (import ./deepMerge.nix) {} listOfAttrs;
-  intraOutputFold = builtins.map intraOutputFoldFunction mapping4;
-  flattening = (import ./flattenList.nix) intraOutputFold;
-  crossOutputFoldFunction = intraOutputFoldFunction;
+  intraOutputFold = intraOutputFoldFunction mapping4;
+  #flattening = (import ./flattenList.nix) intraOutputFold;
+  #crossOutputFoldFunction = intraOutputFoldFunction;
 in
-crossOutputFoldFunction flattening
+#crossOutputFoldFunction flattening
+intraOuputFold
   
