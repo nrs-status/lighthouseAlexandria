@@ -1,0 +1,4 @@
+{
+  mkOutput = import ./mkOutput.nix;
+}
+
