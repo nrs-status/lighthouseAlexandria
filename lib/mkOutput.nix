@@ -31,5 +31,5 @@ let
   #crossOutputFoldFunction = intraOutputFoldFunction;
 in
 #crossOutputFoldFunction flattening
-builtins.break
+builtins.break flattening
   
