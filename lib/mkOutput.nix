@@ -28,9 +28,7 @@ let
   intraOutputFold = builtins.map intraOutputFoldFunction mapping4;
   tracePoint = builtins.trace (builtins.deepSeq intraOutputFold intraOutputFold) intraOutputFold;
   flattening = (import ./flattenList.nix) tracePoint;
-
-  #crossOutputFoldFunction = intraOutputFoldFunction;
+  crossOutputFoldFunction = intraOutputFoldFunction;
 in
-#crossOutputFoldFunction flattening
-flattening
+crossOutputFoldFunction flattening
   
