@@ -14,4 +14,4 @@ let total = {
 }; in inputs.libs.baselib.withDebug activateDebug {
   nondebug = total.final;
   debug = total;
-};
+}
