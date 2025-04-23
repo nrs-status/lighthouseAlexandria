@@ -1,6 +1,6 @@
 { pkgslib }: 
 { importInputs, filePath }:
 {
-  name = (import ./getSuffixlessBasename { inherit pkgslib; });
+  name = (import ./getSuffixlessBasename.nix { inherit pkgslib; }) filePath;
   value = import filePath importInputs;
 }

@@ -1,5 +1,5 @@
 { envsdir, mypkgsdir, outputsList }:
-let
+rec {
   mapping = builtins.map (outputElm: import ./mkOutputUnit.nix outputElm) outputsList;
   funcForSecondMapping = triple: {
     outputElm = triple.outputElm;
@@ -28,7 +28,6 @@ let
   intraOutputFold = builtins.map intraOutputFoldFunction mapping4;
   tracePoint = builtins.trace (builtins.deepSeq intraOutputFold intraOutputFold) intraOutputFold;
   flattening = (import ./flattenList.nix) tracePoint;
-  crossOutputFoldFunction = intraOutputFoldFunction;
-in
-crossOutputFoldFunction flattening
+  crossOutputFoldFunction = intraOutputFoldFunction; 
+}
   

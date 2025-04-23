@@ -4,7 +4,9 @@
   };
 
   outputs = inputs:
+    let pkgs = import inputs.nixpkgs {}; in
     {
-      lib = (import ./lib);
+      pkgslib = pkgs.lib;
+      baselib = import ./lib { pkgslib = pkgs.lib; };
     };
 }
