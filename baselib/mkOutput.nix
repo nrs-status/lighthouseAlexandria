@@ -21,7 +21,7 @@ let total = rec {
   #result: list containing attribute sets whose keys are systems
   attrsMapForThirdMap = key: triple: {
     selectedEnvs = pkgslib.attrsets.filterAttrs (key: val: builtins.elem val (triple.outputElm.envsToProvide triple.envs)) triple.envs;
-    selectedPkgs = triple.outputElm.packagesToProvide triple.myPkgs;
+    selectedPkgs = pkgslib.attrsets.filterAttrs (key: val: builtins.elem val (triple.outputElm.packagesToProvide triple.myPkgs)) triple.mypkgs
   };
   mapping3 = builtins.map (attrs: builtins.mapAttrs attrsMapForThirdMap attrs) mapping2;
   attrsMapForFourthMap = key: val: {
