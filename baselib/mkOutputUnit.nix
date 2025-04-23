@@ -1,7 +1,7 @@
 outputElm:
 rec {
   inherit outputElm;
-  intermediateMkMyPkgs = { mypkgsdir, system }: (import ./mkMyPkgs.nix { pkgslib = pkgs.lib; }) {
+  intermediateMkMyPkgs = { mypkgsdir, system }: (import ./mkMyPkgs.nix { pkgslib = outputElm.inputs.libs.pkgslib; }) {
     inherit mypkgsdir;
     inputs = outputElm.inputs;
     inherit system;
