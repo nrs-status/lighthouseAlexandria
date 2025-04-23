@@ -27,7 +27,7 @@ rec {
   mapping4 = builtins.map funcForFourthMapping mapping3;
   intraOutputFoldFunction = listOfAttrs: builtins.foldl' (import ./deepMerge.nix) {} listOfAttrs;
   intraOutputFold = builtins.map intraOutputFoldFunction mapping4;
-  flattening = lib.lists.flatten intraOutputFold;
+  flattening = pkgslib.lists.flatten intraOutputFold;
   crossOutputFoldFunction = intraOutputFoldFunction; 
 }
   
