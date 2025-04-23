@@ -1,9 +1,9 @@
 { pkgslib }:
-{ mypkgsdir, flakeInputs, system }:
+{ mypkgsdir, inputs, system }:
 (import ./importPairAttrsOfDir.nix { inherit pkgslib; }) {
   filePath = mypkgsdir;
   inputForImportPairs = {
-    inherit flakeInputs;
+    inherit inputs;
     inherit system;
   };
 }

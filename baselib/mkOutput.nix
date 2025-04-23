@@ -1,35 +1,39 @@
 { pkgslib }:
 { envsdir, mypkgsdir, outputsList, activateDebug ? false }:
 let total = rec {
+  inherit outputsList;
   mapping = builtins.map (outputElm: import ./mkOutputUnit.nix outputElm) outputsList;
-  funcForSecondMapping = triple: {
-    outputElm = triple.outputElm;
-    envs = triple.mkEnvsAttrs {
-      inherit envsdir;
-      inherit mypkgsdir;
-    };
-    myPkgs = triple.mkMyPkgs {
-      inherit mypkgsdir;
-    };
-  };
-  mapping2 = builtins.map funcForSecondMapping mapping;
-  funcForThirdMapping = triple: {
-    supportedSystems = triple.outputElm.supportedSystems;
+  nestedFuncForSecondMapping = triple: let
+      systems = triple.outputElm.supportedSystems;
+      funcToMapOverSystems = (system: {
+        outputElm = triple.outputElm;
+        envs = triple.intermediateMkEnvsAttrs {
+          inherit envsdir;
+          inherit mypkgsdir;
+          inherit system;
+        };
+        myPkgs = triple.intermediateMkMyPkgs {
+          inherit mypkgsdir;
+          inherit system;
+        };});
+        in pkgslib.genAttrs systems funcToMapOverSystems; 
+  mapping2 = builtins.map nestedFuncForSecondMapping mapping;
+  #result: list containing attribute sets whose keys are systems
+  attrsMapForThirdMap = key: triple: {
     selectedEnvs = triple.outputElm.envsToProvide triple.envs;
     selectedPkgs = triple.outputElm.packagesToProvide triple.myPkgs;
   };
-  mapping3 = builtins.map funcForThirdMapping mapping2;
-  nestedFuncForFourthMapping = triple: system: {
-    packages.${system} = triple.selectedPkgs;
-    devShells.${system} = triple.selectedEnvs;
+  mapping3 = builtins.map (attrs: builtins.mapAttrs attrsMapForThirdMap attrs) mapping2;
+  attrsMapForFourthMap = key: val: {
+    packages.${key} = val.selectedPkgs;
+    devShells.${key} = val.selectedEnvs;
   };
-  funcForFourthMapping = triple: builtins.map (nestedFuncForFourthMapping triple) triple.supportedSystems;
-  mapping4 = builtins.map funcForFourthMapping mapping3;
-  intraOutputFoldFunction = listOfAttrs: builtins.foldl' (import ./deepMerge.nix) {} listOfAttrs;
-  intraOutputFold = builtins.map intraOutputFoldFunction mapping4;
-  extractSingleton = builtins.elemAt intraOutputFold 0;
-  final = extractSingleton;
-}; in (import ./withDebug.nix) activateDebug {
+  mapping4 = builtins.map (attrs: builtins.mapAttrs attrsMapForFourthMap attrs) mapping3;
+  removeSystemFromKey = builtins.map (attrs: builtins.attrValues attrs) mapping4;
+  foldForEachOutput = listOfAttrs: builtins.foldl' (import ./deepMerge.nix) {} listOfAttrs;
+  mapping5 = builtins.map foldForEachOutput removeSystemFromKey;
+  final = foldForEachOutput mapping5;
+}; in (import ./withDebug.nix) true {
   debug = total;
   nondebug = total.final;
 }
