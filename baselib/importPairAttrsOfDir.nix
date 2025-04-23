@@ -7,7 +7,7 @@ let total = rec {
   };
   functionToMap = path: import ./mkImportPair.nix { inherit pkgslib; } { importInputs = inputForImportPairs; filePath = path; };
   importPairList = builtins.map functionToMap filesList;
-  final = builtins.listToAttrs importPairList
+  final = builtins.listToAttrs importPairList;
 
 }; in (import ./withDebug.nix) activateDebug {
   debug = total;
