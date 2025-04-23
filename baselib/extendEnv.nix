@@ -4,11 +4,11 @@ let total = rec {
     inherit inputs myPkgs;
     activateDebug = true;
   }; 
-  resultingNixpkgsPackageList = target.packagesFromNixpkgs ++ newNixpkgsPackageList;
-  resultingLocalPackageList = target.packagesFromLocalRepo ++ newLocalPackageList;
-  resultingShellHook = target.shellHook + shellHookExtension;
-  final = target.pkgs.mkShell {
-    packages = resultingNixpkgsPackageList + resultingLocalPackageList;
+  resultingNixpkgsPackageList = targetTotal.packagesFromNixpkgs ++ newNixpkgsPackageList;
+  resultingLocalPackageList = targetTotal.packagesFromLocalRepo ++ newLocalPackageList;
+  resultingShellHook = targetTotal.shellHook + shellHookExtension;
+  final = targetTotal.pkgs.mkShell {
+    packages = resultingNixpkgsPackageList ++ resultingLocalPackageList;
     shellHook = resultingShellHook;
   };
 }; in inputs.libs.baselib.withDebug activateDebug {
