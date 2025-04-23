@@ -20,7 +20,7 @@ let total = rec {
   mapping2 = builtins.map nestedFuncForSecondMapping mapping;
   #result: list containing attribute sets whose keys are systems
   attrsMapForThirdMap = key: triple: {
-    selectedEnvs = triple.outputElm.envsToProvide triple.envs;
+    selectedEnvs = pkgslib.attrsets.filterAttrs (key: val: builtins.elem val (triple.outputElm.envsToProvide triple.envs)) triple.envs;
     selectedPkgs = triple.outputElm.packagesToProvide triple.myPkgs;
   };
   mapping3 = builtins.map (attrs: builtins.mapAttrs attrsMapForThirdMap attrs) mapping2;
@@ -29,8 +29,8 @@ let total = rec {
     devShells.${key} = val.selectedEnvs;
   };
   mapping4 = builtins.map (attrs: builtins.mapAttrs attrsMapForFourthMap attrs) mapping3;
-  removeSystemFromKey = builtins.map (attrs: builtins.attrValues attrs) mapping4;
   foldForEachOutput = listOfAttrs: builtins.foldl' (import ./deepMerge.nix) {} listOfAttrs;
+  removeSystemFromKey = builtins.map (attrs: builtins.attrValues attrs) mapping4;
   mapping5 = builtins.map foldForEachOutput removeSystemFromKey;
   final = foldForEachOutput mapping5;
 }; in (import ./withDebug.nix) activateDebug {
