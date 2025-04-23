@@ -7,6 +7,6 @@
     let pkgs = import inputs.nixpkgs {}; in
     {
       pkgslib = pkgs.lib;
-      baselib = import ./lib { pkgslib = pkgs.lib; };
+      baselib = import ./baselib { pkgslib = pkgs.lib; };
     };
 }

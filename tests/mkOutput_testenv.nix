@@ -1,12 +1,18 @@
 rec {
-  flake = builtins.getFlake "path:/home/seba/newEnv/";
-  inputs = {
-    nixpkgs = builtins.getFlake "github:NixOs/nixpkgs/nixos-unstable";
-    lighthouseAlexandria = builtins.getFlake "path:/home/seba/lighthouseAlexandria";
+  flakes = {
+    lighthouseAlexandria = builtins.getFlake "github:nrs-status/lighthouseAlexandria";
   };
-  pkgs = import inputs.nixpkgs {};
+  libs = {
+    pkgslib = flakes.lighthouseAlexandria.pkgslib;
+    baselib = flakes.lighthouseAlexandria.baselib;
+  };
+  mockInputs = {
+    nixpkgs = builtins.getFlake "github:NixOs/nixpkgs/nixos-unstable";
+    nixvimFlakeInput = builtins.getFlake "github:nix-community/nixvim";
+    lighthouseAlexandria = builtins.getFlake "github:nrs-status/lighthouseAlexandria";
+  };
   exampleOutput = {
-    inputs = inputs;
+    inputs = mockInputs;
     supportedSystems = [
       "x86_64-linux"
     ];
@@ -16,12 +22,10 @@ rec {
     packagesToProvide = myPkgs: with myPkgs; [
     ];
   };
-  envsdir = "/home/seba/newEnv/pyramid_giza";
-  mypkgsdir = "/home/seba/newEnv/temple_artemis_ephesus";
-  obj = import ./mkOutput_introspect.nix { inherit envsdir; inherit mypkgsdir; outputsList = [exampleOutput]; };
-  mapping_1 = builtins.elemAt obj.mapping 0;
-  mapping_2 = builtins.elemAt obj.mapping2 0;
-  mkMyPkgs = import ../lib/mkMyPkgs.nix { pkgslib = pkgs.lib; };
-  mkMyPkgs_1 = mkMyPkgs { inherit mypkgsdir; flakeInputs = inputs; };
-
+  mkOutput = libs.baselib.mkOutput {
+    envsdir = /home/sieyes/baghdad_plane/flakes/newEnv/pyramid_giza;
+    mypkgsdir = /home/sieyes/baghdad_plane/flakes/newEnv/temple_artemis_ephesus;
+    outputsList = [ exampleOutput ];
+  };
+  
 }
