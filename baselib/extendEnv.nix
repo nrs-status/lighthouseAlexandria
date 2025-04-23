@@ -1,5 +1,5 @@
 { inputs, myPkgs, target, newNixpkgsPackageList, newLocalPackageList, shellHookExtension, activateDebug ? false }:
-let total = {
+let total = rec {
   targetTotal = import target {
     inherit inputs myPkgs;
     activateDebug = true;
