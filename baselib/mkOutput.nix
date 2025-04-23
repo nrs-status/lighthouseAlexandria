@@ -27,7 +27,7 @@ let total = rec {
   mapping4 = builtins.map funcForFourthMapping mapping3;
   intraOutputFoldFunction = listOfAttrs: builtins.foldl' (import ./deepMerge.nix) {} listOfAttrs;
   intraOutputFold = builtins.map intraOutputFoldFunction mapping4;
-  flattening = pkgslib.lists.flatten intraOutputFold;
+  extractSingleton = builtins.elemAt intraOutputFold 0;
   final = flattening;
 }; in (import ./withDebug.nix) activateDebug {
   debug = total;

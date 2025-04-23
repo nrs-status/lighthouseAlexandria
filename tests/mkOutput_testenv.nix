@@ -26,6 +26,7 @@ rec {
     envsdir = /home/sieyes/baghdad_plane/flakes/newEnv/pyramid_giza;
     mypkgsdir = /home/sieyes/baghdad_plane/flakes/newEnv/temple_artemis_ephesus;
     outputsList = [ exampleOutput ];
+    activateDebug = true;
   };
   
 }
