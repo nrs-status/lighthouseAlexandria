@@ -33,7 +33,7 @@ let total = rec {
   foldForEachOutput = listOfAttrs: builtins.foldl' (import ./deepMerge.nix) {} listOfAttrs;
   mapping5 = builtins.map foldForEachOutput removeSystemFromKey;
   final = foldForEachOutput mapping5;
-}; in (import ./withDebug.nix) true {
+}; in (import ./withDebug.nix) activateDebug {
   debug = total;
   nondebug = total.final;
 }
