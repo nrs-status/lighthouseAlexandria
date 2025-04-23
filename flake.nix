@@ -5,7 +5,7 @@
   };
 
   outputs = inputs:
-    let pkgs = import inputs.nixpkgs {}; in
+    let pkgs = import inputs.nixpkgs { system = "x86_64-linux"; }; in
     {
       pkgslib = pkgs.lib;
       baselib = import ./baselib { 
