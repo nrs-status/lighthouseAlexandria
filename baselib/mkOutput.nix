@@ -1,3 +1,4 @@
+{ pkgslib }:
 { envsdir, mypkgsdir, outputsList }:
 rec {
   mapping = builtins.map (outputElm: import ./mkOutputUnit.nix outputElm) outputsList;
@@ -26,7 +27,7 @@ rec {
   mapping4 = builtins.map funcForFourthMapping mapping3;
   intraOutputFoldFunction = listOfAttrs: builtins.foldl' (import ./deepMerge.nix) {} listOfAttrs;
   intraOutputFold = builtins.map intraOutputFoldFunction mapping4;
-  flattening = (import ./flattenList.nix) intraOutputFold;
+  flattening = lib.lists.flatten intraOutputFold;
   crossOutputFoldFunction = intraOutputFoldFunction; 
 }
   
