@@ -1,5 +1,5 @@
 { pkgslib }:
-{ envsdir, mypkgsdir, outputsList }:
+{ envsdir, mypkgsdir, outputsList, activateDebug ? false }:
 let total = rec {
   mapping = builtins.map (outputElm: import ./mkOutputUnit.nix outputElm) outputsList;
   funcForSecondMapping = triple: {
@@ -32,5 +32,5 @@ let total = rec {
 }; in (import ./withDebug.nix) activateDebug {
   debug = total;
   nondebug = total.final;
-};
+}
   
