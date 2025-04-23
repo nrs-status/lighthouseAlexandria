@@ -1,10 +1,9 @@
 { pkgslib }:
-{ envsdir, nixpkgsFlakeInputAsPkgs, myPkgs }:
+{ envsdir, inputs, myPkgs }:
 (import ./importPairAttrsOfDir.nix { inherit pkgslib; }) {
     filePath = envsdir;
     inputForImportPairs = {
-      pkgs = nixpkgsFlakeInputAsPkgs;
-      inherit myPkgs;
+      inherit inputs myPkgs;
     };
 }
 

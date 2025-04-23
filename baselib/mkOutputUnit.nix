@@ -8,7 +8,7 @@ rec {
   };
   intermediateMkEnvsAttrs = { mypkgsdir, envsdir, system }: (import ./mkEnvsAttrs.nix { pkgslib = outputElm.inputs.libs.pkgslib; }) {
     inherit envsdir;
-    nixpkgsFlakeInputAsPkgs = outputElm.inputs.pkgs;
+    inputs = outputElm.inputs;
     myPkgs = intermediateMkMyPkgs { inherit mypkgsdir; inherit system; };
   };
 }
