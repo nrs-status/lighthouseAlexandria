@@ -7,5 +7,6 @@
   attrsSubtype = import ./attrsSubtype.nix;
   withDebug = import ./withDebug.nix;
   extendNixvimEnvAttrs1 = import ./nixvim/extendNixvimEnvAttrs1.nix;
+  extendEnv = import ./extendEnv.nix;
 }
 
