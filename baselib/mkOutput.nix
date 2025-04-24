@@ -10,7 +10,7 @@ let total = rec {
     inherit mypkgsdir;
     reader = readerToRun;
   };
-initReaderWith = funcToApply: decl: pkgslib.attrsets.genAttrs decl.supportedSystems (system: funcToApply (reader {
+  initReaderWith = funcToApply: decl: pkgslib.attrsets.genAttrs decl.supportedSystems (system: funcToApply (reader {
     inputs = decl.inputs;
     inherit system;
     packagesToProvide = decl.packagesToProvide;
