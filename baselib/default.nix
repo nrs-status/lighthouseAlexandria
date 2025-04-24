@@ -5,7 +5,7 @@
   concatAttrSets = import ./concatAttrSets.nix;
   importPairAttrsOfDir = import ./importPairAttrsOfDir.nix { inherit pkgslib; };
   attrsSubtype = import ./attrsSubtype.nix;
-  withDebug = import ./withDebug.nix;
+  wrapDebug = import ./wrapDebug.nix;
   extendNixvimEnvAttrs1 = import ./nixvim/extendNixvimEnvAttrs1.nix;
   extendEnv = import ./extendEnv.nix;
 }

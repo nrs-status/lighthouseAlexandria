@@ -23,20 +23,21 @@ rec {
     supportedSystems = [
       "x86_64-linux"
     ];
-    envsToProvide = envs: with envs; [
-      workEnv
+    envsToProvide = [
+      "workEnv"
+      "androidEnv"
     ];
-    packagesToProvide = myPkgs: [
-      myPkgs.nixvim.base
+    packagesToProvide = [
+      ["nixvim" "base" ]
+      "androidsdk"
     ];
   };
-  mkOutput2 = import ../baselib/mkOutput.nix { pkgslib = libs.pkgslib; };
-  mkOutput = mkOutput2 {
+  mkOutput = import ../baselib/mkOutput.nix { pkgslib = libs.pkgslib; };
+  result = mkOutput {
     envsdir = /home/sieyes/baghdad_plane/flakes/newEnv/pyramid_giza;
     mypkgsdir = /home/sieyes/baghdad_plane/flakes/newEnv/temple_artemis_ephesus;
-    outputsList = [ exampleOutput ];
+    outputDeclList = [ exampleOutput ];
     activateDebug = true;
   };
-  x = builtins.elemAt (builtins.elemAt mkOutput.removeSystemFromKey 0) 0;
   
 }

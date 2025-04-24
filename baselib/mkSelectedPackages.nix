@@ -13,7 +13,7 @@ let total = rec {
   };
   pkgOfLabel = label: {
     key = label;
-    val = myPkgs.label;
+    val = myPkgs.${label};
   };
     
   triageElm = elm: 
