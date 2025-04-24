@@ -9,7 +9,7 @@
         pkgslib = pkgs.lib; 
         nixvimFlake = inputs.nixvimFlake;
       };
-      tclib = { pkgs, typesSource }: import ./tclib/ {
+      tclib = { pkgs, typesSource }: import ./tclib {
         libs = {
           pkgslib = pkgs.lib;
           inherit baselib;
